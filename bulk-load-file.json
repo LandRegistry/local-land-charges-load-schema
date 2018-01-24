@@ -40,6 +40,7 @@
             ]
         },
         "metadata": {
+            "description": "The operation to play into the register. Use 'IMPORT' for typical data load.",
             "type": "object",
             "properties": {
                 "action": {
