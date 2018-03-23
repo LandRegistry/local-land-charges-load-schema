@@ -195,59 +195,18 @@
             "properties": {
                 "form-a": {
                     "description": "Form A document in support of LON.",
-                    "$ref": "#/definitions/lon-documents"
+                    "type": "string",
+                    "minLength": 1
                 },
                 "temporary-certificate": {
                     "description": "Temporary LON Certificate in support of LON",
-                    "$ref": "#/definitions/lon-documents"
+                    "type": "string",
+                    "minLength": 1
                 },
                 "definitive-certificate": {
                     "description": "Definitive LON Certificate in support of LON",
-                    "$ref": "#/definitions/lon-documents"
-                },
-                "court-order": {
-                    "description": "Court order to vary or cancel LON",
-                    "$ref": "#/definitions/lon-documents"
-                },
-                "form-b": {
-                    "description": "Form B document to vary or cancel LON",
-                    "$ref": "#/definitions/lon-documents"
-                }
-            }
-        },
-        "lon-documents": {
-            "type": "array",
-            "minItems": 1,
-            "items": {
-                "type": "object",
-                "required": ["bucket", "file_id", "reference"],
-                "additionalProperties": false,
-                "properties": {
-                    "bucket": {
-                        "description": "Directory below the main container in the file path, e.g. /lon/",
-                        "type": "string",
-                        "minLength": 1
-                    },
-                    "file_id": {
-                        "description": "The id of the file.",
-                        "type": "string",
-                        "minLength": 1
-                    },
-                    "external_reference": {
-                        "description": "The URI of a file.",
-                        "type": "string",
-                        "minLength": 1
-                    },
-                    "reference": {
-                        "description": "The path to file.",
-                        "type": "string",
-                        "minLength": 1
-                    },
-                    "subdirectory": {
-                        "description": "The sub directory path to file.",
-                        "type": "string",
-                        "minLength": 1
-                    }
+                    "type": "string",
+                    "minLength": 1
                 }
             }
         },
