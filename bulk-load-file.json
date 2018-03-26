@@ -214,7 +214,7 @@
                     "minLength": 1
                 },
                 "court-order": {
-                    "description": "Court order to vary or cancel LON"
+                    "description": "Court order to vary or cancel LON",
                     "type": "string",
                     "minLength": 1
                 }
