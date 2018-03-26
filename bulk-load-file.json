@@ -207,6 +207,16 @@
                     "description": "Definitive LON Certificate in support of LON",
                     "type": "string",
                     "minLength": 1
+                },
+                "form-b": {
+                    "description": "Form B document to vary or cancel LON",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "court-order": {
+                    "description": "Court order to vary or cancel LON"
+                    "type": "string",
+                    "minLength": 1
                 }
             }
         },
