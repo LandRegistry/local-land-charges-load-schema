@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "description": "v2.0.0 schema for local land charge bulk load import file",
+    "description": "v4.0.0 schema for local land charge bulk load import file",
     "type": "array",
     "items": {
         "type": "object",
@@ -301,7 +301,7 @@
             "properties": {
                 "schema-version": {
                     "type": "string",
-                    "pattern": "^2\\.\\d+$"
+                    "pattern": "^4\\.\\d+$"
                 },
                 "geometry": {
                     "$ref": "file:feature_collection.json",
@@ -330,8 +330,8 @@
                 "instrument": {
                     "description": "The document giving rise to the Charge (e.g. charge, deed)",
                     "type": "string",
-                    "enum": ["Acceptance", "Certificate", "Covenants", "Deed", "Deed of modification", "Notice",
-                             "Order", "Resolution", "Scheme", "Transfer", "Undertaking"]
+                    "enum": ["Agreement", "Certificate", "Deed", "Direction", "List", "Notice", "Order",
+                             "Planning permission", "Resolution", "Scheme", "Transfer", "Undertaking"]
                 },
                 "statutory-provision": {
                     "description": "The statutory provision(s) under which the Charge has arisen.",
@@ -342,7 +342,7 @@
                     "type": "string",
                     "description": "The location - physical or virtual - where relevant documents may be inspected.",
                     "minLength": 1,
-                    "maxLength": 475
+                    "maxLength": 500
                 },
                 "further-information-reference": {
                     "type": "string",
@@ -406,16 +406,15 @@
                                 "charge-type": {"enum": ["Planning"]},
                                 "charge-sub-category": {
                                     "enum": [
-                                        "Change a development",
-                                        "Breach of conditions",
                                         "Conservation area",
                                         "Conditional planning consent",
                                         "Enforcement notice",
-                                        "Article 4",
+                                        "Article 4 / no permitted development",
                                         "Planning notices",
                                         "Planning agreement",
                                         "Tree preservation order (TPO)",
-                                        "Listed building conditional planning consent"
+                                        "Listed building conditional planning consent",
+                                        "Modification / rectification orders"
                                     ]
                                 }
                             },
@@ -427,8 +426,7 @@
                                 "charge-sub-category": {
                                     "enum": [
                                         "Listed building",
-                                        "Enforcement notice",
-                                        "Repairs notice"
+                                        "Enforcement notice"
                                     ]
                                 }
                             },
@@ -443,8 +441,7 @@
                                         "Grant",
                                         "Interim certificate under HMO",
                                         "Notice of works or repairs",
-                                        "Re-approval of grant",
-                                        "Re-approval under HMO"
+                                        "Right to buy / right to acquire"
                                     ]
                                 }
                             },
@@ -458,9 +455,13 @@
                                         "Ancient monuments",
                                         "Assets of community value",
                                         "Compulsory purchase order",
-                                        "Improve a highway",
+                                        "Highways and paths",
                                         "Smoke control order",
-                                        "Site of special scientific interest (SSSI)"
+                                        "Site of special scientific interest (SSSI)",
+                                        "Licences",
+                                        "Local acts",
+                                        "Water drainage",
+                                        "Uncommon charges"
                                     ]
                                 }
                             },
@@ -764,7 +765,8 @@
                         "rate-of-interest": {
                             "description": "",
                             "type": "string",
-                            "pattern": "^(\\d+(?:\\.\\d{1,2})?)|(Interest may be payable)|(No interest is payable)$"
+                            "minLength": 1,
+                            "maxLength": 70
                         }
                     },
                     "required": [
