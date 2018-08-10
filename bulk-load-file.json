@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "description": "v4.0.0 schema for local land charge bulk load import file",
+    "description": "v5.0.0 schema for local land charge bulk load import file",
     "type": "array",
     "items": {
         "type": "object",
@@ -315,8 +315,7 @@
                 "charge-type": {
                     "description": "The general category of the Charge (e.g. Planning, Financial)",
                     "type": "string",
-                    "enum": ["Planning", "Listed building", "Housing", "Other", "Land compensation",
-                             "Financial", "Light obstruction notice"]
+                    "minLength": 1
                 },
                 "charge-sub-category": {
                     "type": "string",
@@ -330,8 +329,7 @@
                 "instrument": {
                     "description": "The document giving rise to the Charge (e.g. charge, deed)",
                     "type": "string",
-                    "enum": ["Agreement", "Certificate", "Deed", "Direction", "List", "Notice", "Order",
-                             "Planning permission", "Resolution", "Scheme", "Transfer", "Undertaking"]
+                    "minLength": 1
                 },
                 "statutory-provision": {
                     "description": "The statutory provision(s) under which the Charge has arisen.",
@@ -403,66 +401,18 @@
                         },
                         {
                             "properties": {
-                                "charge-type": {"enum": ["Planning"]},
+                                 "charge-type": {
+                                    "not": {
+                                        "enum": [
+                                            "Financial",
+                                            "Land compensation",
+                                            "Light obstruction notice"
+                                        ]
+                                    }
+                                },
                                 "charge-sub-category": {
-                                    "enum": [
-                                        "Conservation area",
-                                        "Conditional planning consent",
-                                        "Enforcement notice",
-                                        "Article 4 / no permitted development",
-                                        "Planning notices",
-                                        "Planning agreement",
-                                        "Tree preservation order (TPO)",
-                                        "Listed building conditional planning consent",
-                                        "Modification / rectification orders"
-                                    ]
-                                }
-                            },
-                            "required": ["charge-sub-category"]
-                        },
-                        {
-                            "properties": {
-                                "charge-type": {"enum": ["Listed building"]},
-                                "charge-sub-category": {
-                                    "enum": [
-                                        "Listed building",
-                                        "Enforcement notice"
-                                    ]
-                                }
-                            },
-                            "required": ["charge-sub-category"]
-                        },
-                        {
-                            "properties": {
-                                "charge-type": {"enum": ["Housing"]},
-                                "charge-sub-category": {
-                                    "enum": [
-                                        "Approval under house in multiple occupation (HMO)",
-                                        "Grant",
-                                        "Interim certificate under HMO",
-                                        "Notice of works or repairs",
-                                        "Right to buy / right to acquire"
-                                    ]
-                                }
-                            },
-                            "required": ["charge-sub-category"]
-                        },
-                        {
-                            "properties": {
-                                "charge-type": {"enum": ["Other"]},
-                                "charge-sub-category": {
-                                    "enum": [
-                                        "Ancient monuments",
-                                        "Assets of community value",
-                                        "Compulsory purchase order",
-                                        "Highways and paths",
-                                        "Smoke control order",
-                                        "Site of special scientific interest (SSSI)",
-                                        "Licences",
-                                        "Local acts",
-                                        "Water drainage",
-                                        "Uncommon charges"
-                                    ]
+                                    "type": "string",
+                                    "minLength": 1
                                 }
                             },
                             "required": ["charge-sub-category"]
@@ -473,6 +423,24 @@
                     "oneOf": [
                         {"$ref": "#/definitions/object-has-charge-geographic-description"},
                         {"$ref": "#/definitions/object-has-charge-address"}
+                    ]
+                },
+                {
+                    "oneOf": [
+                        {
+                            "required": [
+                                "migration-supplier",
+                                "migrating-authority",
+                                "old-register-part"
+                            ]
+                        },
+                        {
+                            "allOf": [
+                                {"not": {"required": ["migration-supplier"]}},
+                                {"not": {"required": ["migrating-authority"]}},
+                                {"not": {"required": ["old-register-part"]}}
+                            ]
+                        }
                     ]
                 }
             ],
@@ -656,6 +624,12 @@
                         "originating-authority-charge-identifier": {},
                         "migrating-authority": {},
                         "old-register-part": {},
+                        "amount-of-compensation": {
+                            "description": "The total amount of compensation payable to the landowner from which the land was acquired. Valid only when 'charge-type' is 'Land compensation'",
+                            "type": "string",
+                            "minLength": 1,
+                            "pattern": "^\\d+(?:\\.\\d{2})?$"
+                        },
                         "charge-type": {
                             "enum": [
                                 "Land compensation"
