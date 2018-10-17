@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "description": "v2.0.0 schema for local land charge bulk load import file",
+    "description": "v7.0.0 schema for local land charge bulk load import file",
     "type": "array",
     "items": {
         "type": "object",
@@ -152,31 +152,38 @@
             "description": "The address of the applicant",
             "type": "object",
             "required": [
-                "street",
-                "town",
-                "postcode",
+                "line-1",
                 "country"
             ],
             "additionalProperties": false,
             "properties": {
-                "street": {
-                    "description": "The street of the applicant address",
+                "line-1": {
+                    "description": "The first line of the applicant address",
                     "type": "string",
                     "minLength": 1
                 },
-                "town": {
-                    "description": "The town of the applicant address",
-                    "type": "string",
-                    "minLength": 1
+                "line-2": {
+                    "description": "The second line of the applicant address",
+                    "type": "string"
                 },
-                "county": {
-                    "description": "The county of the applicant address",
-                    "type": "string",
-                    "minLength": 1
+                "line-3": {
+                    "description": "The third line of the applicant address",
+                    "type": "string"
+                },
+                "line-4": {
+                    "description": "The forth line of the applicant address",
+                    "type": "string"
+                },
+                "line-5": {
+                    "description": "The fifth line of the applicant address",
+                    "type": "string"
+                },
+                "line-6": {
+                    "description": "The sixth line of the applicant address",
+                    "type": "string"
                 },
                 "postcode": {
-                    "description": "The postcode of the applicant address",
-                    "$ref": "#/definitions/postcode"
+                    "description": "The postcode of the applicant address"
                 },
                 "country": {
                     "description": "The country of the applicant address",
@@ -207,6 +214,16 @@
                     "description": "Definitive LON Certificate in support of LON",
                     "type": "string",
                     "minLength": 1
+                },
+                "form-b": {
+                    "description": "Form B document to vary or cancel LON",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "court-order": {
+                    "description": "Court order to vary or cancel LON",
+                    "type": "string",
+                    "minLength": 1
                 }
             }
         },
@@ -227,7 +244,7 @@
                 }
             },
             "additionalProperties": false,
-            "required": ["height", "extent-covered"],
+            "required": ["extent-covered"],
             "allOf": [
                 {
                     "oneOf": [
@@ -252,7 +269,7 @@
                                     "enum": ["Metres", "Feet"]
                                 }
                             },
-                            "required": ["units"]
+                            "required": ["units", "height"]
 
                         }
 
@@ -291,7 +308,7 @@
             "properties": {
                 "schema-version": {
                     "type": "string",
-                    "pattern": "^2\\.\\d+$"
+                    "pattern": "^4\\.\\d+$"
                 },
                 "geometry": {
                     "$ref": "file:feature_collection.json",
@@ -305,8 +322,7 @@
                 "charge-type": {
                     "description": "The general category of the Charge (e.g. Planning, Financial)",
                     "type": "string",
-                    "enum": ["Planning", "Listed building", "Housing", "Other", "Land compensation",
-                             "Financial", "Light obstruction notice"]
+                    "minLength": 1
                 },
                 "charge-sub-category": {
                     "type": "string",
@@ -320,8 +336,7 @@
                 "instrument": {
                     "description": "The document giving rise to the Charge (e.g. charge, deed)",
                     "type": "string",
-                    "enum": ["Acceptance", "Certificate", "Covenants", "Deed", "Deed of modification", "Notice",
-                             "Order", "Resolution", "Scheme", "Transfer", "Undertaking"]
+                    "minLength": 1
                 },
                 "statutory-provision": {
                     "description": "The statutory provision(s) under which the Charge has arisen.",
@@ -332,7 +347,7 @@
                     "type": "string",
                     "description": "The location - physical or virtual - where relevant documents may be inspected.",
                     "minLength": 1,
-                    "maxLength": 475
+                    "maxLength": 500
                 },
                 "further-information-reference": {
                     "type": "string",
@@ -393,65 +408,18 @@
                         },
                         {
                             "properties": {
-                                "charge-type": {"enum": ["Planning"]},
+                                 "charge-type": {
+                                    "not": {
+                                        "enum": [
+                                            "Financial",
+                                            "Land compensation",
+                                            "Light obstruction notice"
+                                        ]
+                                    }
+                                },
                                 "charge-sub-category": {
-                                    "enum": [
-                                        "Change a development",
-                                        "Breach of conditions",
-                                        "Conservation area",
-                                        "Conditional planning consent",
-                                        "Enforcement notice",
-                                        "Article 4",
-                                        "Planning notices",
-                                        "Planning agreement",
-                                        "Tree preservation order (TPO)",
-                                        "Listed building conditional planning consent"
-                                    ]
-                                }
-                            },
-                            "required": ["charge-sub-category"]
-                        },
-                        {
-                            "properties": {
-                                "charge-type": {"enum": ["Listed building"]},
-                                "charge-sub-category": {
-                                    "enum": [
-                                        "Listed building",
-                                        "Enforcement notice",
-                                        "Repairs notice"
-                                    ]
-                                }
-                            },
-                            "required": ["charge-sub-category"]
-                        },
-                        {
-                            "properties": {
-                                "charge-type": {"enum": ["Housing"]},
-                                "charge-sub-category": {
-                                    "enum": [
-                                        "Approval under house in multiple occupation (HMO)",
-                                        "Grant",
-                                        "Interim certificate under HMO",
-                                        "Notice of works or repairs",
-                                        "Re-approval of grant",
-                                        "Re-approval under HMO"
-                                    ]
-                                }
-                            },
-                            "required": ["charge-sub-category"]
-                        },
-                        {
-                            "properties": {
-                                "charge-type": {"enum": ["Other"]},
-                                "charge-sub-category": {
-                                    "enum": [
-                                        "Ancient monuments",
-                                        "Assets of community value",
-                                        "Compulsory purchase order",
-                                        "Improve a highway",
-                                        "Smoke control order",
-                                        "Site of special scientific interest (SSSI)"
-                                    ]
+                                    "type": "string",
+                                    "minLength": 1
                                 }
                             },
                             "required": ["charge-sub-category"]
@@ -462,6 +430,24 @@
                     "oneOf": [
                         {"$ref": "#/definitions/object-has-charge-geographic-description"},
                         {"$ref": "#/definitions/object-has-charge-address"}
+                    ]
+                },
+                {
+                    "oneOf": [
+                        {
+                            "required": [
+                                "migration-supplier",
+                                "migrating-authority",
+                                "old-register-part"
+                            ]
+                        },
+                        {
+                            "allOf": [
+                                {"not": {"required": ["migration-supplier"]}},
+                                {"not": {"required": ["migrating-authority"]}},
+                                {"not": {"required": ["old-register-part"]}}
+                            ]
+                        }
                     ]
                 }
             ],
@@ -645,6 +631,12 @@
                         "originating-authority-charge-identifier": {},
                         "migrating-authority": {},
                         "old-register-part": {},
+                        "amount-of-compensation": {
+                            "description": "The total amount of compensation payable to the landowner from which the land was acquired. Valid only when 'charge-type' is 'Land compensation'",
+                            "type": "string",
+                            "minLength": 1,
+                            "pattern": "^\\d+(?:\\.\\d{2})?$"
+                        },
                         "charge-type": {
                             "enum": [
                                 "Land compensation"
@@ -754,7 +746,8 @@
                         "rate-of-interest": {
                             "description": "",
                             "type": "string",
-                            "pattern": "^(\\d+(?:\\.\\d{1,2})?)|(Interest may be payable)|(No interest is payable)$"
+                            "minLength": 1,
+                            "maxLength": 70
                         }
                     },
                     "required": [
@@ -808,11 +801,7 @@
                         "servient-land-interest-description": {
                             "description": "The capacity in which the applicant holds the land over which the acquisition of the right to light is prevented (The Servient Land)",
                             "type": "string",
-                            "enum": [
-                                "Freehold owner",
-                                "Tenant for a term of which over 7 years remain unexpired",
-                                "Mortgagee in possession"
-                            ]
+                            "minLength": 1
                         },
                         "structure-position-and-dimension": {
                             "description": "The description of a notional structure which if erected would block the light to the dominant land. This structure is notionally erected on the servient land.",
@@ -829,9 +818,6 @@
 
                     },
                     "required": [
-                        "applicant-address",
-                        "applicant-name",
-                        "servient-land-interest-description",
                         "documents-filed",
                         "structure-position-and-dimension"
                     ]
@@ -884,12 +870,7 @@
 
                     },
                     "required": [
-                        "applicant-address",
-                        "applicant-name",
-                        "servient-land-interest-description",
                         "documents-filed",
-                        "tribunal-temporary-certificate-date",
-                        "tribunal-temporary-certificate-expiry-date"
                     ],
                     "additionalProperties": false
                 }
@@ -933,11 +914,7 @@
 
                     },
                     "required": [
-                        "applicant-address",
-                        "applicant-name",
-                        "servient-land-interest-description",
-                        "documents-filed",
-                        "tribunal-definitive-certificate-date"
+                        "documents-filed"
                     ],
                     "additionalProperties": false
                 }

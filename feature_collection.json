@@ -194,8 +194,7 @@
       "properties": {
         "geometry": {
           "title": "Geometry",
-          "oneOf": [
-            {
+          "oneOf": [{
               "$ref": "#/definitions/point"
             },
             {
@@ -211,19 +210,21 @@
         },
         "properties": {
           "title": "Properties",
-          "oneOf": [
-            {
-              "type": "object"
-            },
-            {
-              "type": "null"
+          "type": "object",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "title": "Feature ID",
+              "description": "Unique (for the charge) identifier for the geometry feature",
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "minimum": 0
             }
-          ]
-        },
-        "id": {}
+          }
+        }
       }
-
-
     },
     "lineStringCoordinates": {
       "title": "Line String Coordinates",
