@@ -308,7 +308,7 @@
             "properties": {
                 "schema-version": {
                     "type": "string",
-                    "pattern": "^4\\.\\d+$"
+                    "pattern": "^7\\.\\d+$"
                 },
                 "geometry": {
                     "$ref": "file:feature_collection.json",
@@ -871,6 +871,7 @@
                     },
                     "required": [
                         "documents-filed",
+                        "tribunal-temporary-certificate-date"
                     ],
                     "additionalProperties": false
                 }
