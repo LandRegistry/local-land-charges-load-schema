@@ -64,7 +64,6 @@ Code of 1875
 Community Infrastructure Levy regulations 2010 regulation 66(1)
 Compulsory Purchase (Vesting Declarations) Act 1981 section 3(4)
 Compulsory Purchase (Vesting Declarations) Act 1981 section 3A(4)
-Compulsory Purchase(Vesting Declarations) Act 1981 section 3A(4)
 Conservation (Natural Habitats) regulations 1994 regulation 11
 Conservation (Natural Habitats) regulations 1994 regulation 14
 Conservation (Natural Habitats, &c) Regulations 1994 regulation 22 paragraph 4
@@ -309,6 +308,7 @@ Town and Country Planning (Control of Advertisements) regulations 1984 SI 1984/4
 Town and Country Planning (Control of Advertisements) regulations 1987 SI 1987/804
 Town and Country Planning (Control of Advertisements) regulations 1989 SI 1989/670
 Town and Country Planning (Control of Advertisements) regulations 1992 SI 1992/666
+Town and Country Planning (General Permitted Development) (England) Order 2015 Article 4(1)
 Town and Country Planning (General Permitted Development) Order 1995
 Town and Country Planning Act 1954 section 28
 Town and Country Planning Act 1954 section 57
