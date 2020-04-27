@@ -89,6 +89,7 @@ Education (London Residuary Body) (Property Transfer) Order 1991
 Energy Act 2013 section 123(3)
 Environment Act 1995
 Environmental Permitting (England and Wales) regulations 2010 regulation 15
+Environmental Permitting (England and Wales) Regulations 2016 regulation 15
 Environmental Protection Act 1990 section 80
 Environmental Protection Act 1990 section 81A
 Environmental Protection Act 1990 section 81B
@@ -344,6 +345,7 @@ Water Industry Act 1991 section 104
 Water Industry Act 1991 section 156
 Water Industry Act 1991 section 158
 Water Industry Act 1991 section 160
+Water Industry Act 1991 section 185
 Water Industry Act 1991 section 66
 Water Industry Act 1991 section 82
 Water Resources Act 1991 section 95
