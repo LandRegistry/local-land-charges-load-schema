@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "description": "v7.0.0 schema for local land charge bulk load import file",
+    "description": "v9.0.0 schema for local land charge bulk load import file",
     "type": "array",
     "items": {
         "type": "object",
@@ -308,8 +308,13 @@
             "properties": {
                 "schema-version": {
                     "type": "string",
-                    "pattern": "^7\\.\\d+$"
+                    "pattern": "^9\\.\d+$",
                 },
+                "cancellation-reason": {
+                     "maxLength": 1500,
+                     "minLength": 1,
+                     "type": "string"
+                 },
                 "geometry": {
                     "$ref": "file:feature_collection.json",
                     "description": "FeatureCollection identifying the Charge extent.",
@@ -476,6 +481,7 @@
                         "geometry": {},
                         "charge-sub-category": {},
                         "charge-creation-date": {},
+                        "cancellation-reason":{},
                         "instrument": {},
                         "statutory-provision": {},
                         "further-information-location": {},
@@ -528,6 +534,7 @@
                         "expiry-date": {},
                         "supplementary-information": {},
                         "author": {},
+                        "cancellation-reason": {},
                         "migration-supplier": {},
                         "originating-authority-charge-identifier": {},
                         "migrating-authority": {},
@@ -563,6 +570,7 @@
                         "geometry": {},
                         "charge-sub-category": {},
                         "charge-creation-date": {},
+                        "cancellation-reason":{},
                         "instrument": {},
                         "statutory-provision": {},
                         "further-information-location": {},
@@ -631,6 +639,7 @@
                         "originating-authority-charge-identifier": {},
                         "migrating-authority": {},
                         "old-register-part": {},
+                        "cancellation-reason":{},
                         "amount-of-compensation": {
                             "description": "The total amount of compensation payable to the landowner from which the land was acquired. Valid only when 'charge-type' is 'Land compensation'",
                             "type": "string",
@@ -680,6 +689,7 @@
                         "schema-version": {},
                         "registration-date": {},
                         "charge-address": {},
+                        "cancellation-reason": {},
                         "charge-geographic-description": {},
                         "geometry": {},
                         "charge-sub-category": {},
@@ -720,6 +730,7 @@
                         "charge-geographic-description": {},
                         "geometry": {},
                         "charge-sub-category": {},
+                        "cancellation-reason":{},
                         "charge-creation-date": {},
                         "instrument": {},
                         "statutory-provision": {},
