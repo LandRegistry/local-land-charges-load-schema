@@ -6,9 +6,3 @@ This repository contains the following:
 * A list of statutory provisions
 
 During the Beta phase of Local Land Charges, these schemas could be subject to change.
-
-** The list of statutory provisons found here ```statutory_provisions.txt``` may not be the most up to date version.**
-
-Please find an up to date copy of the Statutory Provisions here:
-
-[ https://search-local-land-charges.service.gov.uk/statutory-provisions ] 
