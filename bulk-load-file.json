@@ -1,31 +1,50 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "description": "v9.0.0 schema for local land charge bulk load import file",
-    "oneOf": [
-         {
-             "$ref": "#/definitions/other-land-charge"
-         },
-         {
-             "$ref": "#/definitions/land-compensation-charge-s8"
-         },
-         {
-             "$ref": "#/definitions/land-compensation-charge-s52"
-         },
-         {
-             "$ref": "#/definitions/general-financial-charge"
-         },
-         {
-             "$ref": "#/definitions/specific-financial-charge"
-         }
-     ],
     "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "meta-data": {
+                "$ref": "#/definitions/metadata"
+            },
+            "local-land-charge": {
+                "$ref": "#/definitions/local-land-charge-item"
+            }
+        }
+    },
     "definitions": {
+        "local-land-charge-item": {
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/other-land-charge"
+                },
+                {
+                    "$ref": "#/definitions/land-compensation-charge-s8"
+                },
+                {
+                    "$ref": "#/definitions/land-compensation-charge-s52"
+                },
+                {
+                    "$ref": "#/definitions/general-financial-charge"
+                },
+                {
+                    "$ref": "#/definitions/specific-financial-charge"
+                },
+                {
+                    "$ref": "#/definitions/light-obstruction-notice-with-temporary-certificate"
+                },
+                {
+                    "$ref": "#/definitions/light-obstruction-notice-without-temporary-certificate"
+                }
+            ]
+        },
         "metadata": {
-            "description": "The operation to play into the register. Use 'IMPORT' for typical data load.",
+            "description": "The operation to play into the register. Use 'ADD' for typical data load.",
             "type": "object",
             "properties": {
                 "action": {
-                    "enum": ["IMPORT", "ADD", "VARY", "CANCEL"]
+                    "enum": ["ADD", "VARY", "CANCEL"]
                 }
             },
             "additionalProperties": false
@@ -129,19 +148,160 @@
                 }
             }
         },
+        "applicant-address": {
+            "description": "The address of the applicant",
+            "type": "object",
+            "required": [
+                "line-1",
+                "country"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "line-1": {
+                    "description": "The first line of the applicant address",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "line-2": {
+                    "description": "The second line of the applicant address",
+                    "type": "string"
+                },
+                "line-3": {
+                    "description": "The third line of the applicant address",
+                    "type": "string"
+                },
+                "line-4": {
+                    "description": "The forth line of the applicant address",
+                    "type": "string"
+                },
+                "line-5": {
+                    "description": "The fifth line of the applicant address",
+                    "type": "string"
+                },
+                "line-6": {
+                    "description": "The sixth line of the applicant address",
+                    "type": "string"
+                },
+                "postcode": {
+                    "description": "The postcode of the applicant address"
+                },
+                "country": {
+                    "description": "The country of the applicant address",
+                    "type": "string",
+                    "minLength": 1
+                }
+            }
+        },
+        "documents-filed": {
+            "description": "The documents lodged to support the LON registration",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "form-a"
+            ],
+            "properties": {
+                "form-a": {
+                    "description": "Form A document in support of LON.",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "temp-cert": {
+                    "description": "Temporary LON Certificate in support of LON",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "def-cert": {
+                    "description": "Definitive LON Certificate in support of LON",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "form-b": {
+                    "description": "Form B document to vary or cancel LON",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "court-order": {
+                    "description": "Court order to vary or cancel LON",
+                    "type": "string",
+                    "minLength": 1
+                }
+            }
+        },
+        "structure-position-and-dimension": {
+            "type": "object",
+            "properties": {
+                "height": {
+                    "description": "The height of the notional structure as a number, or 'Unlimited height'"
+                },
+                "extent-covered": {
+                    "description": "Whether the structure covers the whole extent of the local land charge"
+                },
+                "part-explanatory-text": {
+                    "description": "Description of the part of the extent covered by the structure"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["extent-covered"],
+            "allOf": [{
+                    "oneOf": [{
+                            "type": "object",
+                            "properties": {
+                                "height": {
+                                    "enum": ["Unlimited height"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "height": {
+                                    "not": {
+                                        "enum": ["Unlimited height"]
+                                    }
+                                }
+                            },
+                            "required": ["height"]
+
+                        }
+
+                    ]
+                },
+                {
+                    "oneOf": [{
+                            "type": "object",
+                            "properties": {
+                                "extent-covered": {
+                                    "enum": ["All of the extent"]
+                                }
+                            },
+                            "not": {
+                                "required": ["part-explanatory-text"]
+                            }
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "extent-covered": {
+                                    "enum": ["Part of the extent"]
+                                },
+                                "part-explanatory-text": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["part-explanatory-text"]
+                        }
+                    ]
+                }
+            ]
+        },
         "base-land-charge": {
             "description": "Abstract subschema representing the common elements of any local land charge item",
             "type": "object",
             "properties": {
                 "schema-version": {
                     "type": "string",
-                    "pattern": "^9\\.\\d+$"
+                    "pattern": "^7\\.\\d+$"
                 },
-                "cancellation-reason": {
-                     "maxLength": 1500,
-                     "minLength": 1,
-                     "type": "string"
-                 },
                 "geometry": {
                     "$ref": "file:feature_collection.json",
                     "description": "FeatureCollection identifying the Charge extent.",
@@ -156,14 +316,6 @@
                     "type": "string",
                     "minLength": 1
                 },
-                "end-date": {
-                     "description": "The date the charge Item is cancelled on the register.",
-                     "$ref": "#/definitions/date"
-                 },
-                 "start-date": {
-                     "$ref": "#/definitions/date",
-                     "description": "The date the charge Item is entered into the register."
-                 },
                 "charge-sub-category": {
                     "type": "string",
                     "description": "The specific sub-category of the Charge.",
@@ -204,6 +356,19 @@
                     "minLength": 1,
                     "maxLength": 1500
                 },
+                "start-date": {
+                    "description": "The date the charge Item is entered into the register.",
+                    "$ref": "#/definitions/date"
+                },
+                "end-date": {
+                    "description": "The date the charge Item is cancelled on the register.",
+                    "$ref": "#/definitions/date"
+                },
+                "cancellation-reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1500
+                },
                 "author": {
                     "description": "The author of the current charge item state (e.g. who created, updated or cancelled a charge)",
                     "$ref": "#/definitions/author"
@@ -223,10 +388,6 @@
                     "type": "string",
                     "minLength": 1
                 },
-                "local-land-charge": {
-                    "description": "Identifier of the Charge issued by Land Registry.",
-                    "type": "integer"
-                },
                 "old-register-part": {
                     "description": "The part of the LLC register on which a charge was recorded by a lcoal authority prior to migration. Only required for migrated Charges.",
                     "type": "string",
@@ -241,7 +402,8 @@
                                 "charge-type": {
                                     "enum": [
                                         "Financial",
-                                        "Land compensation"
+                                        "Land compensation",
+                                        "Light obstruction notice"
                                     ]
                                 }
                             },
@@ -255,7 +417,8 @@
                                     "not": {
                                         "enum": [
                                             "Financial",
-                                            "Land compensation"
+                                            "Land compensation",
+                                            "Light obstruction notice"
                                         ]
                                     }
                                 },
@@ -300,7 +463,8 @@
                 "charge-type",
                 "further-information-location",
                 "migration-supplier",
-                "migrating-authority"
+                "migrating-authority",
+                "old-register-part"
             ]
         },
         "other-land-charge": {
@@ -317,16 +481,15 @@
                         "geometry": {},
                         "charge-sub-category": {},
                         "charge-creation-date": {},
-                        "end-date": {},
-                        "local-land-charge": {},
-                        "start-date": {},
-                        "cancellation-reason":{},
                         "instrument": {},
                         "statutory-provision": {},
                         "further-information-location": {},
                         "further-information-reference": {},
                         "expiry-date": {},
                         "supplementary-information": {},
+                        "start-date": {},
+                        "end-date": {},
+                        "cancellation-reason": {},
                         "author": {},
                         "migration-supplier": {},
                         "originating-authority-charge-identifier": {},
@@ -336,7 +499,8 @@
                             "not": {
                                 "enum": [
                                     "Land compensation",
-                                    "Financial"
+                                    "Financial",
+                                    "Light obstruction notice"
                                 ]
                             }
                         },
@@ -370,12 +534,11 @@
                         "further-information-location": {},
                         "further-information-reference": {},
                         "expiry-date": {},
-                        "end-date": {},
-                        "local-land-charge": {},
-                        "start-date": {},
                         "supplementary-information": {},
-                        "author": {},
+                        "start-date": {},
+                        "end-date": {},
                         "cancellation-reason": {},
+                        "author": {},
                         "migration-supplier": {},
                         "originating-authority-charge-identifier": {},
                         "migrating-authority": {},
@@ -411,7 +574,6 @@
                         "geometry": {},
                         "charge-sub-category": {},
                         "charge-creation-date": {},
-                        "cancellation-reason":{},
                         "instrument": {},
                         "statutory-provision": {},
                         "further-information-location": {},
@@ -420,6 +582,7 @@
                         "supplementary-information": {},
                         "start-date": {},
                         "end-date": {},
+                        "cancellation-reason": {},
                         "author": {},
                         "migration-supplier": {},
                         "originating-authority-charge-identifier": {},
@@ -475,12 +638,12 @@
                         "supplementary-information": {},
                         "start-date": {},
                         "end-date": {},
+                        "cancellation-reason": {},
                         "author": {},
                         "migration-supplier": {},
                         "originating-authority-charge-identifier": {},
                         "migrating-authority": {},
                         "old-register-part": {},
-                        "cancellation-reason":{},
                         "amount-of-compensation": {
                             "description": "The total amount of compensation payable to the landowner from which the land was acquired. Valid only when 'charge-type' is 'Land compensation'",
                             "type": "string",
@@ -530,20 +693,19 @@
                         "schema-version": {},
                         "registration-date": {},
                         "charge-address": {},
-                        "cancellation-reason": {},
                         "charge-geographic-description": {},
                         "geometry": {},
                         "charge-sub-category": {},
                         "charge-creation-date": {},
                         "instrument": {},
-                        "end-date": {},
-                        "local-land-charge": {},
-                        "start-date": {},
                         "statutory-provision": {},
                         "further-information-location": {},
                         "further-information-reference": {},
                         "expiry-date": {},
                         "supplementary-information": {},
+                        "start-date": {},
+                        "end-date": {},
+                        "cancellation-reason": {},
                         "author": {},
                         "migration-supplier": {},
                         "originating-authority-charge-identifier": {},
@@ -574,17 +736,16 @@
                         "charge-geographic-description": {},
                         "geometry": {},
                         "charge-sub-category": {},
-                        "cancellation-reason":{},
                         "charge-creation-date": {},
                         "instrument": {},
-                        "end-date": {},
-                        "local-land-charge": {},
-                        "start-date": {},
                         "statutory-provision": {},
                         "further-information-location": {},
                         "further-information-reference": {},
                         "expiry-date": {},
                         "supplementary-information": {},
+                        "start-date": {},
+                        "end-date": {},
+                        "cancellation-reason": {},
                         "author": {},
                         "migration-supplier": {},
                         "originating-authority-charge-identifier": {},
@@ -612,6 +773,177 @@
                         "originating-authority",
                         "rate-of-interest",
                         "amount-originally-secured"
+                    ],
+                    "additionalProperties": false
+                }
+            ]
+        },
+        "base-light-obstruction-notice": {
+            "description": "Abstract subschema representing a Light obstruction notice",
+            "allOf": [
+                {"$ref": "#/definitions/base-land-charge"},
+                {
+                    "type": "object",
+                    "properties": {
+                        "schema-version": {},
+                        "geometry": {},
+                        "registration-date": {},
+                        "charge-address": {},
+                        "charge-geographic-description": {},
+                        "charge-type": {
+                            "enum": [
+                                "Light obstruction notice"
+                            ]
+                        },
+                        "charge-sub-category": {},
+                        "charge-creation-date": {},
+                        "instrument": {},
+                        "statutory-provision": {},
+                        "further-information-location": {},
+                        "further-information-reference": {},
+                        "expiry-date": {},
+                        "supplementary-information": {},
+                        "start-date": {},
+                        "end-date": {},
+                        "cancellation-reason": {},
+                        "author": {},
+                        "migration-supplier": {},
+                        "originating-authority-charge-identifier": {},
+                        "migrating-authority": {},
+                        "old-register-part": {},
+                        "applicant-address": {
+                            "description": "The address of the applicant",
+                            "$ref": "#/definitions/applicant-address"
+                        },
+                        "applicant-name": {
+                            "description": "The name of the individual or organisation applying for the light obstruction notice",
+                            "type": "string",
+                            "minLength": 1
+                        },
+                        "servient-land-interest-description": {
+                            "description": "The capacity in which the applicant holds the land over which the acquisition of the right to light is prevented (The Servient Land)",
+                            "type": "string",
+                            "minLength": 1
+                        },
+                        "structure-position-and-dimension": {
+                            "description": "The description of a notional structure which if erected would block the light to the dominant land. This structure is notionally erected on the servient land.",
+                            "$ref": "#/definitions/structure-position-and-dimension"
+                        },
+                        "tribunal-definitive-certificate-date": {
+                            "description": "The date the definitive Lands Tribunal certificate was issued by the Lands Tribunal.",
+                            "$ref": "#/definitions/date"
+                        },
+                        "documents-filed": {
+                            "description": "The documents lodged to support the LON registration",
+                            "$ref": "#/definitions/documents-filed"
+                        }
+
+                    },
+                    "required": [
+                        "documents-filed",
+                        "structure-position-and-dimension"
+                    ]
+                }
+            ]
+        },
+        "light-obstruction-notice-with-temporary-certificate": {
+            "description": "Subschema representing a Light obstruction notice with a temporary certificate",
+            "allOf": [
+                {"$ref": "#/definitions/base-light-obstruction-notice"},
+                {
+                    "type": "object",
+                    "properties": {
+                        "schema-version": {},
+                        "geometry": {},
+                        "registration-date": {},
+                        "charge-address": {},
+                        "charge-geographic-description": {},
+                        "charge-creation-date": {},
+                        "instrument": {},
+                        "statutory-provision": {},
+                        "further-information-location": {},
+                        "further-information-reference": {},
+                        "expiry-date": {},
+                        "supplementary-information": {},
+                        "start-date": {},
+                        "end-date": {},
+                        "cancellation-reason": {},
+                        "author": {},
+                        "migration-supplier": {},
+                        "originating-authority-charge-identifier": {},
+                        "migrating-authority": {},
+                        "old-register-part": {},
+                        "charge-type": {
+                            "enum": [
+                                "Light obstruction notice"
+                            ]
+                        },
+                        "applicant-address": {},
+                        "applicant-name": {},
+                        "servient-land-interest-description": {},
+                        "structure-position-and-dimension": {},
+                        "tribunal-definitive-certificate-date": {},
+                        "tribunal-temporary-certificate-date": {
+                            "description": "The date a temporary Lands Tribunal certificate was issued by the Lands Tribunal",
+                            "$ref": "#/definitions/date"
+                        },
+                        "tribunal-temporary-certificate-expiry-date": {
+                            "description": "The date a temporary Lands Tribunal certificate expires, this is a maximum of 6 months after the date of registration",
+                            "$ref": "#/definitions/date"
+                        },
+                        "documents-filed": {}
+
+                    },
+                    "required": [
+                        "documents-filed",
+                        "tribunal-temporary-certificate-date"
+                    ],
+                    "additionalProperties": false
+                }
+            ]
+        },
+        "light-obstruction-notice-without-temporary-certificate": {
+            "description": "Subschema representing a Light obstruction notice without a temporary certificate",
+            "allOf": [
+                {"$ref": "#/definitions/base-light-obstruction-notice"},
+                {
+                    "type": "object",
+                    "properties": {
+                        "schema-version": {},
+                        "geometry": {},
+                        "registration-date": {},
+                        "charge-address": {},
+                        "charge-geographic-description": {},
+                        "charge-creation-date": {},
+                        "instrument": {},
+                        "statutory-provision": {},
+                        "further-information-location": {},
+                        "further-information-reference": {},
+                        "expiry-date": {},
+                        "supplementary-information": {},
+                        "start-date": {},
+                        "end-date": {},
+                        "cancellation-reason": {},
+                        "author": {},
+                        "migration-supplier": {},
+                        "originating-authority-charge-identifier": {},
+                        "migrating-authority": {},
+                        "old-register-part": {},
+                        "charge-type": {
+                            "enum": [
+                                "Light obstruction notice"
+                            ]
+                        },
+                        "applicant-address": {},
+                        "applicant-name": {},
+                        "servient-land-interest-description": {},
+                        "structure-position-and-dimension": {},
+                        "tribunal-definitive-certificate-date": {},
+                        "documents-filed": {}
+
+                    },
+                    "required": [
+                        "documents-filed"
                     ],
                     "additionalProperties": false
                 }
