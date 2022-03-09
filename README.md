@@ -7,7 +7,7 @@ This repository contains the following:
 
 During the Beta phase of Local Land Charges, these schemas could be subject to change.
 
-**The list of statutory provisons found in ```statutory_provisions.txt``` and ```categories.json``` may not be the most up to date versions.**
+**The list of statutory provisons found in ```statutory_provisions.txt``` and categories found in ```categories.json``` may not be the most up to date versions.**
 
 Please find an up to date copy of the Statutory Provisions here:
 
