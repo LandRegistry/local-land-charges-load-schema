@@ -19,6 +19,7 @@
                 "instruments": ["Agreement"]
             },
             "Planning notice": {},
+            "Planning order": {},
             "Tree preservation order (TPO)": {
                 "instruments": ["Order"]
             }
@@ -38,7 +39,6 @@
         "sub-categories": {
             "Occupancy including house in multiple occupation (HMO)": {},
             "Grant": {},
-            "Interim certificate under HMO": {},
             "Works, repairs or authority action": {},
             "Right to buy / right to acquire": {}
         }
@@ -59,7 +59,7 @@
                 "instruments": ["Order"]
             },
             "Pipeline": {},
-            "Protected areas /sites": {
+            "Protected areas / sites": {
                 "instruments": ["Notice"]
             },
             "Smoke control order": {

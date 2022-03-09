@@ -36,7 +36,7 @@ The input files should contain an array of JSON objects in the form:
 [
   {
     "meta-data": {
-      "action": "ADD", "VARY", "IMPORT" or "CANCEL"
+      "action": "ADD", "VARY" or "CANCEL"
     },
     "local-land-charge": {
       ... Existing local land charge definition
@@ -47,7 +47,6 @@ The input files should contain an array of JSON objects in the form:
 The action specified determines which end point in the maintain-api will be called.
 ```
 ADD    :: /local-land-charge
-IMPORT :: /local-land-charge
 VARY   :: /local-land-charge/local-land-charge-id
 CANCEL :: /local-land-charge/local-land-charge-id
 ```
@@ -62,8 +61,7 @@ The Bulk Load application produces three output files which are all placed in th
 `error`, and `summary`.
 
 ### Error
-Contains the `migration_partner_code`, original JSON, and an error message for each local land charge record that was
-rejected by the register import process.
+Contains the `migration_partner_code`, original JSON, and an error message for each local land charge record that was rejected by the register import process.
 
 ### Correlation
 Contains the `originating_authority_charge_identifier`, `migration_partner_code` and new `local-land-charge` (id) and 
