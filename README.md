@@ -15,7 +15,7 @@ Please find an up to date copy of the Statutory Provisions here:
 
 or in a more human readable format here:
 
-[ https://search-local-land-charges.service.gov.uk//statutory-provision-list ]
+[ https://search-local-land-charges.service.gov.uk/statutory-provision-list ]
 
 **The categories information found in ```categories.json``` may not be the most up to date version.**
 
