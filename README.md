@@ -2,7 +2,7 @@
 
 This repository contains the following:
 * A Draft04 JSON Schema describing the input file for the LLC bulk-load program.
-* A JSON schema showing the mapping between the Charge types, sub categories and instruments (validation of this mapping has been removed from the v5.0 schema and is now performed separately)
+* JSON showing the mapping between the Charge types, sub categories and instruments (validation of this mapping has been removed from the v5.0 schema and is now performed separately)
 * A list of statutory provisions
 
 During the Beta phase of Local Land Charges, these schemas could be subject to change.
@@ -12,3 +12,17 @@ During the Beta phase of Local Land Charges, these schemas could be subject to c
 Please find an up to date copy of the Statutory Provisions here:
 
 [ https://search-local-land-charges.service.gov.uk/statutory-provisions ]
+
+or in a more human readable format here:
+
+[ https://search-local-land-charges.service.gov.uk/statutory-provision-list ]
+
+**The categories information found in ```categories.json``` may not be the most up to date version.**
+
+Please find an up to date copy of the Categories here:
+
+[ https://search-local-land-charges.service.gov.uk/categories/all ]
+
+or in a more human readable format here:
+
+[ https://search-local-land-charges.service.gov.uk/category-list ]
